@@ -1,0 +1,48 @@
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(from var(--pallete_text) h s l /0.7);
+
+
+  &--closed {
+    opacity: 0;
+    visibility: hidden;
+    scale: 0;
+    transition: opacity 0.4s ease, visibility 0.4s ease, scale 0.4s ease;
+  }
+
+  &--open {
+    opacity: 1;
+    scale: 1;
+    visibility: visible;
+  }
+
+  &__Content {
+    position: relative;
+    width: min(100%, 350px);
+    min-height: 200px;
+    background-color: var(--pallete_bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__CloseBtn {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:focus {
+      outline: 1px solid var(--pallete_blocks);
+      outline-offset: 3px;
+    }
+  }
+}
