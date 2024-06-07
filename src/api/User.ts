@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { validateResponse } from "@/utils";
+import { fetchJson } from "@/utils";
 import { URL } from "@/constants";
 
 //login schema
@@ -26,43 +26,36 @@ type RegData = z.infer<typeof RegDataSchema>;
 type UserProfile = z.infer<typeof UserProfileSchema>;
 
 export const login = (loginData: AuthInfo): Promise<void> => {
-  return fetch(`${URL}/auth/login`, {
+  return fetchJson<void>(false, `${URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams(loginData),
     credentials: "include",
-  })
-    .then(validateResponse)
-    .then(() => undefined);
+  });
 };
 
 export const logout = (): Promise<void> => {
-  return fetch(`${URL}/auth/logout`, {
+  return fetchJson<void>(false, `${URL}/auth/logout`, {
     method: "GET",
     credentials: "include",
-  }).then(() => undefined);
+  });
 };
 
 export const register = (regData: RegData): Promise<void> => {
-  return fetch(`${URL}/user`, {
+  return fetchJson<void>(false, `${URL}/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams(regData).toString(),
-  })
-    .then(validateResponse)
-    .then(() => undefined);
+  });
 };
 
 export const getProfile = (): Promise<UserProfile> => {
-  return fetch(`${URL}/profile`, {
+  return fetchJson<UserProfile>(true, `${URL}/profile`, {
     method: "GET",
     credentials: "include",
-  })
-    .then(validateResponse)
-    .then((profile) => profile.json())
-    .then((profile) => UserProfileSchema.parse(profile));
+  }).then((profile) => UserProfileSchema.parse(profile));
 };

@@ -1,16 +1,23 @@
-import { useQuery } from '@tanstack/react-query'
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom';
 import './App.scss'
-import { Main } from './pages/Main'
-import { getProfile } from './api/User'
+import { Main } from './pages/Main';
+import { GenresPage } from './pages/GenresPage';
 
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path='/' element={<Main />}>
+    <Route path='/genres' element={<GenresPage />} />
+  </Route>
+))
 
 function App() {
 
-  const data = useQuery({
-    queryKey: ['profile'], queryFn: getProfile, retry: 0
-  })
   return (
-    <Main data={data} />
+    <RouterProvider router={router} />
   )
 }
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { validateResponse } from "@/utils";
+import { fetchJson } from "@/utils";
 import { URL } from "@/constants";
 
 const MovieSchema = z.object({
@@ -41,6 +41,15 @@ type Genres = z.infer<typeof GenresSchema>;
 
 type SearchFiltres = { [key: string]: unknown };
 
+//common function for getting movies list
+const fetchMoviesList = (
+  ...args: [string, RequestInit?]
+): Promise<MoviesList> => {
+  return fetchJson<MoviesList>(true, ...args).then((movieList) =>
+    MoviesListSchema.parse(movieList)
+  );
+};
+
 export const getMovies = (
   searchFiltres: SearchFiltres = {}
 ): Promise<MoviesList> => {
@@ -52,25 +61,46 @@ export const getMovies = (
     {}
   );
   const searchStr = new URLSearchParams(transformedFiltres).toString();
-  return fetch(`${URL}/movie${searchStr}`)
-    .then(validateResponse)
-    .then((movies) => MoviesListSchema.parse(movies));
+  return fetchMoviesList(`${URL}/movie${searchStr}`);
 };
 
 export const getTop10 = (): Promise<MoviesList> => {
-  return fetch(`${URL}/movie/top10`)
-    .then(validateResponse)
-    .then((top10) => MoviesListSchema.parse(top10));
+  return fetchMoviesList(`${URL}/movie/top10`);
 };
 
 export const getGenres = (): Promise<Genres> => {
-  return fetch(`${URL}/movie/genres`)
-    .then(validateResponse)
-    .then((genres) => GenresSchema.parse(genres));
+  return fetchJson<Genres>(true, `${URL}/movie/genres`).then((genres) =>
+    GenresSchema.parse(genres)
+  );
 };
 
 export const getMovie = (movieBy: number | "random"): Promise<Movie> => {
-  return fetch(`${URL}/${movieBy}`)
-    .then(validateResponse)
-    .then((movie) => MovieSchema.parse(movie));
+  return fetchJson<Movie>(true, `${URL}/${movieBy}`).then((movie) =>
+    MovieSchema.parse(movie)
+  );
+};
+
+export const getFavorites = (): Promise<MoviesList> => {
+  return fetchMoviesList(`${URL}/favorites`, {
+    method: "GET",
+    credentials: "include",
+  });
+};
+
+export const addFavoriteFilm = (movieId: string): Promise<void> => {
+  return fetchJson<void>(false, `${URL}/favorites`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ id: movieId }),
+    credentials: "include",
+  });
+};
+
+export const removeFromFavorites = (movieId: number): Promise<void> => {
+  return fetchJson<void>(false, `${URL}/favorites/${movieId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
 };
