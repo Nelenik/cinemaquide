@@ -21,9 +21,9 @@ const UserProfileSchema = z.object({
   favorites: z.array(z.string()),
 });
 
-type AuthInfo = z.infer<typeof AuthInfoSchema>;
-type RegData = z.infer<typeof RegDataSchema>;
-type UserProfile = z.infer<typeof UserProfileSchema>;
+export type AuthInfo = z.infer<typeof AuthInfoSchema>;
+export type RegData = z.infer<typeof RegDataSchema>;
+export type UserProfile = z.infer<typeof UserProfileSchema>;
 
 export const login = (loginData: AuthInfo): Promise<void> => {
   return fetchJson<void>(false, `${URL}/auth/login`, {
