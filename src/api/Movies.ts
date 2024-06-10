@@ -35,11 +35,11 @@ const GenresSchema = z.array(z.string());
 
 const MoviesListSchema = z.array(MovieSchema);
 
-type Movie = z.infer<typeof MovieSchema>;
-type MoviesList = z.infer<typeof MoviesListSchema>;
-type Genres = z.infer<typeof GenresSchema>;
+export type Movie = z.infer<typeof MovieSchema>;
+export type MoviesList = z.infer<typeof MoviesListSchema>;
+export type Genres = z.infer<typeof GenresSchema>;
 
-type SearchFiltres = { [key: string]: unknown };
+export type SearchFiltres = { [key: string]: unknown };
 
 //common function for getting movies list
 const fetchMoviesList = (

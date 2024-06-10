@@ -7,6 +7,7 @@ import { Profile } from './pages/Profile';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import { PrivateRoute } from './hoc/PrivateRoute';
 
 export const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout />} errorElement={<p>Page not found!!</p>}>
@@ -14,7 +15,11 @@ export const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/genres' element={<GenresPage />} />
     <Route path='/genres/:genreName' element={<AGenrePage />} />
     <Route path='/movie/:movieId' element={<MoviePage />} />
-    <Route path='/profile/:userName' element={<Profile />}>
+    <Route path='/profile/:userName' element={
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    }>
       <Route path='favorites' element={<FavoritesPage />} />
       <Route path='settings' element={<SettingsPage />} />
     </Route>

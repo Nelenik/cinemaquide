@@ -5,6 +5,7 @@ import { NOOP } from "@/utils";
 
 export const AuthContext = createContext<AuthContext>({
   isAuthorized: false,
+  isLoading: false,
   profile: null,
   mutateLogin: NOOP,
   mutateLogout: NOOP,
@@ -13,6 +14,7 @@ export const AuthContext = createContext<AuthContext>({
 
 interface AuthContext {
   isAuthorized: boolean,
+  isLoading: boolean,
   profile: UserProfile | null,
   mutateRegister: UseMutateFunction<void, Error, RegData, unknown>,
   mutateLogin: UseMutateFunction<void, Error, AuthInfo, unknown>,
@@ -29,33 +31,36 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const profileQuery = useQuery({
     queryKey: ['user', 'profile'],
     queryFn: getProfile,
-    retry: false
+    retry: false,
   })
 
+
   const registerMutation = useMutation({
-    // mutationKey: ['auth', 'register'],
     mutationFn: register
   })
 
   const loginMutation = useMutation({
-    // mutationKey: ['auth', 'login'],
-    mutationFn: login
+    mutationFn: login,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['user', 'profile'] })
+    }
   })
 
   const logoutMutation = useMutation({
-    // mutationKey: ['auth', 'logout'],
     mutationFn: logout,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user', 'register'] })
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['user', 'profile'] })
     }
   })
   const value: AuthContext = {
     isAuthorized: profileQuery.isSuccess,
+    isLoading: profileQuery.isLoading,
     profile: profileQuery.data || null,
     mutateRegister: registerMutation.mutate,
     mutateLogin: loginMutation.mutate,
     mutateLogout: logoutMutation.mutate
   }
+  console.log('from provider' + ' ' + value.isAuthorized)
 
   return (
     <AuthContext.Provider value={value}>
