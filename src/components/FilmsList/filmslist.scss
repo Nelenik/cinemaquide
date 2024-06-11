@@ -1,0 +1,13 @@
+@import '@/mixins';
+
+.Films {
+  &__List {
+    @include mg-reset;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+    grid-auto-rows: minmax(336px, auto);
+    gap: 40px;
+  }
+
+  &__Item {}
+}

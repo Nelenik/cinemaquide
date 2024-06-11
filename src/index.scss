@@ -1,4 +1,38 @@
 @import '../node_modules/normalize.css/normalize.css';
+@import '@/mixins';
+
+@font-face {
+  font-family: "Play";
+  src: url('./assets/fonts/play-bold-webfont.woff2') format(woff2), url('./assets/fonts/play-bold-webfont.woff') format(woff);
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Play";
+  src: url('./assets/fonts/play-regular-webfont.woff2') format(woff2), url('./assets/fonts/play-regular-webfont.woff') format(woff);
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-white: #fff;
+  --bg-black: #0a0b0b;
+  --bg-black-disabled: #747474;
+  --bg-brand-disabled: #d6d2f1;
+  --content-secondary: rgba(255, 255, 255, 0.7);
+  --bg-brand-hovered: #8577e1;
+  --content-placeholder: rgba(0, 0, 0, 0.4);
+  --content-active: #b4a9ff;
+  --bg-brand-active: #6a5dc2;
+  --content-black: #000;
+  --bg-secondary: #393b3c;
+  --bg-disabled: rgba(255, 255, 255, 0.5);
+  --content-disabled: rgba(255, 255, 255, 0.5);
+  --content-primary: #fff;
+}
 
 html {
   box-sizing: border-box;
@@ -25,17 +59,17 @@ img {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Play', sans-serif;
   font-weight: 400;
 
 }
 
-.btn-reset {
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
+// .btn-reset {
+//   padding: 0;
+//   border: none;
+//   background: none;
+//   cursor: pointer;
+// }
 
 [role="button"],
 .btn-reset {

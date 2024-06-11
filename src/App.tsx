@@ -1,7 +1,7 @@
+import './App.scss'
 import {
   RouterProvider
 } from 'react-router-dom';
-import './App.scss'
 import { router } from './router';
 import { AuthProvider } from './hoc/AuthProvider';
 

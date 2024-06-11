@@ -1,6 +1,6 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import './layout.scss';
-import CinemaLogo from 'assets/cinema-logo.svg?react';
+import CinemaLogo from 'assets/img/cinema-logo.svg?react';
 import { useAuth } from '@/hooks/useAuth';
 import { createPortal } from 'react-dom';
 import { useState } from 'react';

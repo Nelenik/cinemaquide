@@ -1,0 +1,12 @@
+@mixin mg-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin btn-reset {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
