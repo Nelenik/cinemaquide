@@ -1,0 +1,57 @@
+@import '@/mixins';
+
+.AppButton {
+  @include btn-reset;
+  position: relative;
+  padding: 19px 24px;
+  color: var(--content-primary);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 133%;
+  border-radius: 28px;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color 0.3s linear, background-color 0.3s linear, color 0.3s linear;
+
+  &--brand {
+    background-color: var(--bg-brand-active);
+
+    &:disabled {
+      background-color: var(--bg-brand-disabled);
+      color: var(--content-disabled);
+    }
+
+    &:hover:not(:focus-visible) {
+      background-color: var(--bg-brand-hovered);
+    }
+
+    &:focus-visible {
+      outline-color: var(--bg-brand-active);
+
+    }
+  }
+
+  &--secondary {
+    background-color: var(--bg-secondary);
+
+    &:disabled {
+      background-color: var(--bg-black-disabled);
+      color: var(--content-disabled);
+    }
+
+    &:hover:not(:focus-visible) {
+      background-color: var(--bg-black-disabled);
+    }
+
+    &:focus-visible {
+      outline-color: var(--bg-secondary);
+    }
+  }
+}
+
+.BtnSvg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+}

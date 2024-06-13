@@ -6,6 +6,7 @@ import { NOOP } from "@/utils";
 export const AuthContext = createContext<AuthContext>({
   isAuthorized: false,
   isLoading: false,
+  isError: false,
   profile: null,
   mutateLogin: NOOP,
   mutateLogout: NOOP,
@@ -15,6 +16,7 @@ export const AuthContext = createContext<AuthContext>({
 interface AuthContext {
   isAuthorized: boolean,
   isLoading: boolean,
+  isError: boolean,
   profile: UserProfile | null,
   mutateRegister: UseMutateFunction<void, Error, RegData, unknown>,
   mutateLogin: UseMutateFunction<void, Error, AuthInfo, unknown>,
@@ -55,12 +57,12 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const value: AuthContext = {
     isAuthorized: profileQuery.isSuccess,
     isLoading: profileQuery.isLoading,
+    isError: profileQuery.isError,
     profile: profileQuery.data || null,
     mutateRegister: registerMutation.mutate,
     mutateLogin: loginMutation.mutate,
     mutateLogout: logoutMutation.mutate
   }
-  console.log('from provider' + ' ' + value.isAuthorized)
 
   return (
     <AuthContext.Provider value={value}>
